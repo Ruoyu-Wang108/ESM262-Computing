@@ -1,0 +1,18 @@
+---
+title: "Assignment 1a"
+author: "Ruoyu Wang"
+date: "2/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Why are you taking this course?
+
+One of the reasons is that I need this course to fulfill my data focus requirement. Besides, I constantly felt that I need more practice to improve my R and coding skills. I had a feeling that I've stuck in the same place without making any breakthroughs or learning new techniques. Hopefully, I could learn more about the general coding mindset and some modular thinking to better prepare for my future work and improve my coding efficiency.
+
+### What is your background in data science?
+
+I started to learn R and data science since Bren. As a second-year, I've taken many data/coding related courses, such as Allison's 206 and 244 and Frew's GIS and 261. I also worked in R for my GP data analysis. However, sometimes, especially when I was working with GP, I wish I could know more about how to streamline my analysis. Now I often use copy-and-paste to deal with repeat or similar work. My attempt to create a function all failed at the end. So I am looking forward to doing more exercise on creating functions and packages.
