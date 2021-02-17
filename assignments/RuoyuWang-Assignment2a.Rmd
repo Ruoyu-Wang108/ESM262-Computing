@@ -1,0 +1,50 @@
+---
+title: "Assignment 2a"
+author: "Ruoyu Wang"
+date: "2/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+library(tidyverse)
+```
+
+```{r function}
+v_power <- function(v, m){
+  c_rolling = 0.015
+  c_drag = 0.3
+  g = 9.8
+  p_air = 1.2
+  A = 9
+  
+  pb = c_rolling*m*g*v + 0.5*A*p_air*c_drag*v^3
+  return(pb)
+}
+```
+
+```{r plug-in-nums}
+m1 = 31752
+m2 = 25000
+
+power_df <- data_frame(
+  speed = c(30, 22.22, 33.33, 11.11),
+  power_1 = v_power(v = c(30, 22.22, 33.33, 11.11), m = m1),
+  power_2 = v_power(v = c(30, 22.22, 33.33, 11.11), m = m2)
+)
+```
+
+```{r plot}
+ggplot()+
+  geom_line(data = power_df, 
+            aes(x = speed, y = power_1),
+            color = "blue")+
+  geom_line(data = power_df, 
+            aes(x = speed, y = power_2),
+            color = "green")+
+  labs(x = "Speed (m/s)", y = "Automobile Power (watts)")+
+  theme_minimal()
+```
+
