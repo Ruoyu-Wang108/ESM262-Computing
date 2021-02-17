@@ -13,12 +13,13 @@ library(tidyverse)
 ```
 
 ```{r function}
+# copy and paste the function from .R
 v_power <- function(v, m){
   c_rolling = 0.015
   c_drag = 0.3
-  g = 9.8
-  p_air = 1.2
-  A = 9
+  g = 9.8     # in m/s2
+  p_air = 1.2 # in kg/m3
+  A = 9       # in m2
   
   pb = c_rolling*m*g*v + 0.5*A*p_air*c_drag*v^3
   return(pb)
@@ -26,6 +27,7 @@ v_power <- function(v, m){
 ```
 
 ```{r plug-in-nums}
+# assign two masses
 m1 = 31752
 m2 = 25000
 
@@ -34,6 +36,10 @@ power_df <- data_frame(
   power_1 = v_power(v = c(30, 22.22, 33.33, 11.11), m = m1),
   power_2 = v_power(v = c(30, 22.22, 33.33, 11.11), m = m2)
 )
+
+m1
+m2
+power_df
 ```
 
 ```{r plot}
