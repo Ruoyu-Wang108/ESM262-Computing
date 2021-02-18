@@ -17,6 +17,7 @@ v_power <- function(v, m){
   
   # surface area of car 
   A = 9       # in m2
+  
   # m, mass in kg
   # v, speed in m/s
   
