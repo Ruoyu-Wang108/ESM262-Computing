@@ -1,6 +1,6 @@
 ---
-title: "Assignment 2a"
-author: "Ruoyu Wang"
+title: "ESM 262 Assignment 2a"
+author: "Evan Heberlein, Nikole Vannest, Ruoyu Wang"
 date: "2/17/2021"
 output: html_document
 ---
@@ -29,7 +29,7 @@ v_power <- function(v, m){
 ```{r plug-in-nums}
 # assign two masses
 m1 = 31752
-m2 = 25000
+m2 = m1 * 0.75
 
 power_df <- data_frame(
   speed = c(30, 22.22, 33.33, 11.11),
@@ -46,11 +46,15 @@ power_df
 ggplot()+
   geom_line(data = power_df, 
             aes(x = speed, y = power_1),
-            color = "blue")+
+            color = "blue", size = 1)+
   geom_line(data = power_df, 
             aes(x = speed, y = power_2),
-            color = "green")+
-  labs(x = "Speed (m/s)", y = "Automobile Power (watts)")+
+            color = "green", size = 1)+
+  annotate("text", x = c(35,35), y = c(220000, 180000),
+           label = c("Heavy", "Light"),
+           color = c("blue", "green"))+
+  labs(x = "Speed (m/s)", y = "Automobile Power (Watts)",
+       title = "Vehicle power versus speed plot")+
   theme_minimal()
 ```
 
