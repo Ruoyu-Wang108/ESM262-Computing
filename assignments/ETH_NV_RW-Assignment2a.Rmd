@@ -56,5 +56,7 @@ ggplot()+
   labs(x = "Speed (m/s)", y = "Automobile Power (Watts)",
        title = "Vehicle power versus speed plot")+
   theme_minimal()
+
+ggsave("ETH_NV_RW-Assignment2a-plot.png", height = 4, width = 6)
 ```
 
