@@ -20,9 +20,11 @@ v_power <- function(v, m){
   g = 9.8     # in m/s2
   p_air = 1.2 # in kg/m3
   A = 9       # in m2
+  # m in kg
+  # v in m/s
   
   pb = c_rolling*m*g*v + 0.5*A*p_air*c_drag*v^3
-  return(pb)
+  return(pb) # in Watts
 }
 ```
 
