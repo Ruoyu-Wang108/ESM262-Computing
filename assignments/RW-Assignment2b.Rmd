@@ -1,0 +1,105 @@
+---
+title: "ESM 262 Assignment 2b"
+author: "Evan Heberlein, Ruoyu Wang"
+date: "2/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+library(tidyverse)
+library(here)
+library(purrr)
+```
+
+```{r car_sample}
+possible_cars = data.frame(name = c("A","B","C","D"),
+                           mass=c(10000,65000,38000,30000), 
+                           area = c(22,30,22, 10))
+```
+
+```{r highways}
+nsample = 100
+crolling = runif(n =nsample, min = 0.01, max = 0.03)
+
+
+
+head(crolling)
+```
+
+```{r power-function}
+# call our function
+source(here("R", "vehicle_power.R"))
+
+# example to show that the c_rolling can be overwritten
+# v_power(v =1, m =1, A = 1, c_rolling = 1)
+# 9.98
+```
+
+```{r for-loop}
+# make a data frame to store the outputs
+# the number of rows is the length of "crolling", so no need to create a df for crolling
+# the column of the df is the number of car types
+
+power_df = as.data.frame(matrix(nrow=length(crolling), ncol=nrow(possible_cars)))
+
+# power_df should have 100 rows and 4 columns
+
+# 120 km/h --> m/s
+speed = 33.3
+
+# for each type of car, run the function with its area and mass for 100 different rolling coefficients. Then store the results in one column.
+
+for (i in 1:nrow(possible_cars)) {
+  power_df[,i] = v_power(A=possible_cars$area[i], m=possible_cars$mass[i], v=speed, c_rolling = crolling)
+}
+
+# change the column names to the possible car names
+colnames(power_df)=possible_cars$name
+```
+
+```{r for-box-plot}
+# change the power_df to long fornat
+power_df_long = power_df %>% 
+  pivot_longer(cols=everything(), names_to="car", values_to="power")
+
+ggplot()+
+  geom_boxplot(data = power_df_long, 
+               aes(x = car, y = power, fill = car),
+               show.legend = FALSE)+
+  labs(x = "Car type", y = "Vehicle Power (Watts)", 
+       title = "Box plot with for loop")+
+  theme_classic()
+```
+```{r pmap}
+# Using pmap to do the loop. The area and mass should be matched for each type of car, so use list to group them. the v_power is the function name, the c_rolling have 100 values.
+power_pmap <- as.data.frame(
+  pmap(list(A = possible_cars$area,
+            m = possible_cars$mass),
+       v = speed,
+       v_power,
+       c_rolling = crolling))
+
+# change the column names to car names
+colnames(power_pmap)=possible_cars$name
+```
+
+```{r pamp-box-plot}
+# change the power_df to long fornat
+power_pmap_long = power_pmap %>% 
+  pivot_longer(cols=everything(), names_to="car", values_to="power")
+
+ggplot()+
+  geom_boxplot(data = power_pmap_long, 
+               aes(x = car, y = power, fill = car),
+               show.legend = FALSE)+
+  labs(x = "Car type", y = "Vehicle Power (Watts)", 
+       title = "Box plot with purrr::pmap")+
+  theme_classic()
+```
+
+
+
+
