@@ -1,6 +1,6 @@
 ---
 title: "ESM 262 Assignment 2b"
-author: "Evan Heberlein, Nikole Vannest, Ruoyu Wang"
+author: "Evan Heberlein, Ruoyu Wang"
 date: "2/22/2021"
 output: html_document
 ---
@@ -21,9 +21,11 @@ possible_cars = data.frame(name = c("A","B","C","D"),
 
 ```{r highways}
 nsample = 100
-c_rolling = runif(n =nsample, min = 0.01, max = 0.03)
+crolling = as.data.frame(runif(n =nsample, min = 0.01, max = 0.03))
 
-head(c_rolling)
+
+
+head(crolling)
 ```
 
 ```{r power}
@@ -33,5 +35,17 @@ speed = 33.3
 # call our function
 source(here("R", "vehicle_power.R"))
 
+v_power(v =1, m =1, A = 1, c_rolling = 1)
+```
+
+```{r for-loop}
+# make a data frame to store the outputs
+power_df = as.data.frame(matrix(nrow=length(crolling), ncol=nrow(possible_cars)))
+
+# for (i in 1:nrow(crolling)) {
+#   power_df[,i] = v_power(A=possible_cars$area[i], m=possible_cars$mass[i], v=speed, c_rolling = )
+# }
+
+head(crolling)
 ```
 
