@@ -1,4 +1,4 @@
-# team members: Evan Heberlein, Nikole Vannest, Ruoyu Wang
+# team members: Evan Heberlein, Ruoyu Wang
 # 2021-02-17
 # Function to compute vehicle power
 
