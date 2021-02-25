@@ -1,0 +1,87 @@
+---
+title: "ESM 262 Assignment 2b"
+author: "Evan Heberlein, Ruoyu Wang"
+date: "2/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+library(tidyverse)
+library(here)
+library(purrr)
+```
+
+```{r car_sample}
+possible_cars = data.frame(name = c("A","B","C","D"),
+                           mass=c(10000,65000,38000,30000), 
+                           area = c(22,30,22,10))
+```
+
+```{r highways}
+nsample = 100
+crolling_100 = runif(n =nsample, min = 0.01, max = 0.03)
+
+head(crolling)
+```
+
+```{r power}
+# 120 km/h --> m/s
+speed = 33.3
+
+# call our function
+source(here("R", "vehicle_power.R"))
+
+v_power(v =1, m =1, A = 1, c_rolling = 1)
+```
+
+```{r for-loop}
+# make a data frame to store the outputs
+power_df = as.data.frame(matrix(nrow=length(crolling), ncol=nrow(possible_cars)))
+
+# build for-loop
+for (i in 1:nrow(possible_cars)) {
+  power_df[,i] = v_power(A=possible_cars$area[i], m=possible_cars$mass[i], v=speed, c_rolling = crolling_100)
+}
+
+# assign column names
+colnames(power_df) = possible_cars$name
+
+# pivot longer
+power_df_pivot <- power_df %>% pivot_longer(cols = everything(),
+                                            names_to = "Car",
+                                            values_to = "Power")
+
+```
+
+```{r box plot}
+# create box plot
+cars_box <- ggplot() +
+  geom_boxplot(data = power_df_pivot, aes(x = Car, y = Power))
+
+# call box plot
+cars_box
+```
+
+```{r with pmap}
+# recreate for loop in pmap
+power_2 = pmap(list(A = possible_cars$area, m = possible_cars$mass), v_power, v = speed, c_rolling = crolling_100)
+
+# convert to data frame
+power_2_df = as.data.frame(power_2, col.names = possible_cars$name)
+
+# pivot longer
+power_2_df_pivot <-  power_2_df %>% pivot_longer(cols = everything(),
+                                                 names_to = "Car",
+                                                 values_to = "Power")
+
+# make second box plot
+cars_box_2 <- ggplot() +
+  geom_boxplot(data = power_2_df_pivot, aes(x = Car, y = Power))
+
+# call box plot
+cars_box_2
+```
+
