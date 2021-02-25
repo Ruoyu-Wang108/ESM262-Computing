@@ -15,16 +15,20 @@ library(purrr)
 ```
 
 ```{r car_sample}
+# 4 types of possible car 
 possible_cars = data.frame(name = c("A","B","C","D"),
                            mass=c(10000,65000,38000,30000), 
                            area = c(22,30,22,10))
 ```
 
 ```{r highways}
+# a random sample of 100 highways each with a different rolling coefficient
 nsample = 100
+
+# a uniform distribution with a minimum value of 0.01 and a maximum value of 0.03
 crolling_100 = runif(n =nsample, min = 0.01, max = 0.03)
 
-head(crolling)
+head(crolling_100)
 ```
 
 ```{r power}
@@ -34,14 +38,15 @@ speed = 33.3
 # call our function
 source(here("R", "vehicle_power.R"))
 
-v_power(v =1, m =1, A = 1, c_rolling = 1)
+# make sure it works
+# v_power(v =1, m =1, A = 1, c_rolling = 1)
 ```
 
 ```{r for-loop}
 # make a data frame to store the outputs
-power_df = as.data.frame(matrix(nrow=length(crolling), ncol=nrow(possible_cars)))
+power_df = as.data.frame(matrix(nrow=length(crolling_100), ncol=nrow(possible_cars)))
 
-# build for-loop
+# build a for-loop
 for (i in 1:nrow(possible_cars)) {
   power_df[,i] = v_power(A=possible_cars$area[i], m=possible_cars$mass[i], v=speed, c_rolling = crolling_100)
 }
@@ -50,16 +55,20 @@ for (i in 1:nrow(possible_cars)) {
 colnames(power_df) = possible_cars$name
 
 # pivot longer
-power_df_pivot <- power_df %>% pivot_longer(cols = everything(),
-                                            names_to = "Car",
-                                            values_to = "Power")
+power_df_pivot <- power_df %>% 
+  pivot_longer(cols = everything(),
+               names_to = "Car",
+               values_to = "Power")
 
 ```
 
 ```{r box plot}
 # create box plot
 cars_box <- ggplot() +
-  geom_boxplot(data = power_df_pivot, aes(x = Car, y = Power))
+  geom_boxplot(data = power_df_pivot, 
+               aes(x = Car, y = Power, fill = Car),
+               show.legend = FALSE)+
+  theme_minimal()
 
 # call box plot
 cars_box
@@ -67,19 +76,24 @@ cars_box
 
 ```{r with pmap}
 # recreate for loop in pmap
-power_2 = pmap(list(A = possible_cars$area, m = possible_cars$mass), v_power, v = speed, c_rolling = crolling_100)
+power_2 = pmap(list(A = possible_cars$area, m = possible_cars$mass), 
+               v_power, v = speed, c_rolling = crolling_100)
 
 # convert to data frame
 power_2_df = as.data.frame(power_2, col.names = possible_cars$name)
 
 # pivot longer
-power_2_df_pivot <-  power_2_df %>% pivot_longer(cols = everything(),
-                                                 names_to = "Car",
-                                                 values_to = "Power")
+power_2_df_pivot <-  power_2_df %>% 
+  pivot_longer(cols = everything(),
+               names_to = "Car",
+               values_to = "Power")
 
 # make second box plot
 cars_box_2 <- ggplot() +
-  geom_boxplot(data = power_2_df_pivot, aes(x = Car, y = Power))
+  geom_boxplot(data = power_2_df_pivot, 
+               aes(x = Car, y = Power, fill = Car),
+               show.legend = FALSE)+
+  theme_minimal()
 
 # call box plot
 cars_box_2
