@@ -49,7 +49,7 @@ df <- data.frame(
 
 # apply the function for the sample data
 df_season <- df %>% 
-  mutate(season = as.character(map(df$month_num, season_finder)))
+  mutate(season = map(df$month_num, season_finder)[[1]])
 
 head(df_season)
 

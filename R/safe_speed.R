@@ -5,7 +5,8 @@
 # Estimate the highest "velocity" to stop a car within 100 m for different road (with different friction coefficient)
 
 
-safe_speed <- function(v, mu, safe_distance){
+safe_speed <- function(v, mu, safe_distance, 
+                       g = 9.8, d = 0){
   # v, in m/s, the starting speed for calculation.
   v = ifelse(v < 0, return("Speed cannot be less than zero!"), v)
   
@@ -18,10 +19,8 @@ safe_speed <- function(v, mu, safe_distance){
   # mu, no unit, the friction coefficient, need to identify for different roads.
   
   # g, in m/s2, acceleration of gravity, a constant.
-  g = 9.8
-  
+
   # d, in m, the braking distance to be calculate in the loop, the initial default is 0
-  d = 0
   
   # time tracker
   i = 1
