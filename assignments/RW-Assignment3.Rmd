@@ -1,0 +1,60 @@
+---
+title: "ESM 262 Assignment 3"
+author: "Ruoyu Wang"
+date: "2/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+```
+
+
+### 1. The application of my "while" function
+```{r example-of-sv}
+# call the safe speed function
+source(here("R", "safe_speed.R"))
+
+# Suppose the friction coefficient for one road is 0.6
+mu = 0.6
+
+# we set the initial test speed as 1 m/s
+speed = 1
+
+# set the safe distance to be 100 m
+distance = 100
+
+# use the function to estimate the upper limit of speed for a 100 m braking distance
+speed_eg <- safe_speed(v = speed, mu = mu, safe_distance = distance)
+
+# check if the answer is correct
+braking_distance = speed_eg^2 / (2 * mu * 9.8)
+# the braking distance is 100. 63 m
+# therefore, the speed cannot exceed 34.4 m/s to have a safe braking distance
+```
+
+### 2. The application of my case_when function
+```{r example-of-sf}
+# call the season finder function
+source(here("R", "season_finder.R"))
+
+# create a test data frame
+df <- data.frame(
+  month_num = c(rep(1:12, 3)),
+  num = runif(n = 36, min = 1, max = 5)
+)
+
+# apply the function for the sample data
+df_season <- df %>% 
+  mutate(season = as.character(map(df$month_num, season_finder)))
+
+head(df_season)
+
+# warning test
+season_finder(-1)
+season_finder(15)
+```
+
