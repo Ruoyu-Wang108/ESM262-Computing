@@ -15,10 +15,11 @@
 safe_speed <- function(v, mu, safe_distance, 
                        g = 9.8, d = 0){
   
-  v = ifelse(v < 0, return("Speed cannot be less than zero!"), v)
+  v = if(v < 0) {stop("Speed cannot be less than zero!")} else {v}
+          
   
   safe_distance = ifelse(safe_distance < 0, 
-                         return("Target Distance cannot be less than zero!"), 
+                         stop("Target Distance cannot be less than zero!"), 
                          safe_distance)
   
   i = 1 # time tracker

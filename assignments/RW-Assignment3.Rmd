@@ -36,6 +36,17 @@ braking_distance = speed_eg^2 / (2 * mu * 9.8)
 # therefore, the speed cannot exceed 34.4 m/s to have a safe braking distance
 ```
 
+```{r sv-error-checking}
+speed2 = -5
+distance2 = -3
+
+# Not only show the warning but also stop the functions!
+speed_er1 <- safe_speed(v = speed2, mu = mu, safe_distance = distance)
+
+speed_er2 <- safe_speed(v = speed, mu = mu, safe_distance = distance2)
+```
+
+
 ### 2. The application of my case_when function
 ```{r example-of-sf}
 # call the season finder function
@@ -53,8 +64,9 @@ df_season <- df %>%
 
 head(df_season)
 
-# warning test
+# warning tests
 season_finder(-1)
 season_finder(15)
+season_finder("Jan")
 ```
 

@@ -5,8 +5,11 @@
 # Season Finder
 # assign correct seasons for corresponding months
 
+# Variable
+# month: numeric, from 1 to 12
+
 season_finder <- function(month){
-  if (month %in% c(1:12)){
+  if (month %in% c(1:12) & class(month) == "numeric"){
     month = case_when(
       month %in% c(1,2,12) ~ "Winter",
       month %in% c(3:5) ~ "Spring",
@@ -14,8 +17,8 @@ season_finder <- function(month){
       TRUE ~ "Fall"
     )
   } else {
-    warning("Whoops! Wasn't expecting that. Double check your inputs. Make sure that value of month only range from 1 to 12.")
-    return(NA)
+    warning("Whoops! Wasn't expecting that. Double check your inputs. Make sure that value of month is numeric and in the range of 1 to 12.")
+    
   }
 }
 
