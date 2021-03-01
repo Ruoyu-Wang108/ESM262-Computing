@@ -1,0 +1,30 @@
+---
+title: "ESM 262 Assignment 4"
+author: "Gabriel De La Rosa, Quin Smith, Ruoyu Wang"
+date: "3/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(here)
+library(tidyverse)
+library(purrr)
+```
+
+```{r}
+# read the fish.txt file
+fish_eg <- read_tsv(here("assignments","fish.txt"))
+
+# pull out the fish vector
+fish_test <- fish_eg$x
+
+# call our function
+source(here("R","fish_count.R"))
+
+# test the function
+fish_count(fish = fish_test, hist.plot = TRUE)
+fish_count(fish = fish_test)
+```
+
