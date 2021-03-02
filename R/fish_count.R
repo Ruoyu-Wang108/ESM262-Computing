@@ -14,9 +14,10 @@ fish_count <- function(fish, hist.plot = FALSE){
   
   
   if(hist.plot) {
-    return(list(most = most_fish, rarest = rarest_fish, sum = total_fish, fish_plot = plot(fish)))
+    return(list(most = most_fish, rarest = rarest_fish, total = total_fish, fish_plot = plot(fish,
+                                                                                           main = sprintf("%i Total Fish Caught", total_fish))))
   } else {
-    return(list(most = most_fish, rarest = rarest_fish, sum = total_fish))
+    return(list(most = most_fish, rarest = rarest_fish, total = total_fish))
     }
   
 }
