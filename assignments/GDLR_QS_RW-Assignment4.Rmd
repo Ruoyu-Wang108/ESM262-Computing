@@ -26,5 +26,6 @@ source(here("R","fish_count.R"))
 # test the function
 fish_count(fish = fish_test, hist.plot = TRUE)
 fish_count(fish = fish_test)
+fish_count(fish = as.list(fish_test))
 ```
 
