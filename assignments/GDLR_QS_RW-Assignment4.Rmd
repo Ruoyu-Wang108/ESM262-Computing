@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(here)
 library(tidyverse)
-library(purrr)
 ```
 
 ```{r}
@@ -24,8 +23,16 @@ fish_test <- fish_eg$x
 source(here("R","fish_count.R"))
 
 # test the function
+
+# 1. with a plot
 fish_count(fish = fish_test, hist.plot = TRUE)
+
+# 2. default, no plot
 fish_count(fish = fish_test)
+
+# 3. error checking
 fish_count(fish = as.list(fish_test))
+fish_count(fish = c(1:10))
+
 ```
 
